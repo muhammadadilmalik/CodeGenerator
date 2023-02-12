@@ -15,7 +15,7 @@ namespace CodeGenerator.Entities
 
         [SeriesGenerate("USER")]
         [MaxLength(50)]
-        public string Code { get; set; }
+        public string? Code { get; set; }
 
         [MaxLength(256)]
         public string Name { get; set; }

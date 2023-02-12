@@ -42,6 +42,11 @@ namespace CodeGenerator
             return base.SaveChanges();
         }
 
+        public int SaveChangeWithoutCodeGenerator()
+        {
+            return base.SaveChanges();
+        }
+
         public DbSet<User> User { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<ConfigSeries> ConfigSeries { get; set; }

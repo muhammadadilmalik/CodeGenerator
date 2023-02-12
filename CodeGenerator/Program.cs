@@ -1,4 +1,6 @@
-﻿using CodeGenerator;
+﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
+using CodeGenerator;
 using CodeGenerator.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,7 +12,11 @@ var serviceProvider = new ServiceCollection()
 var dbContext = serviceProvider.GetService<MyDBContext>();
 if (dbContext != null)
 {
-    Company tCompany = new Company();
+    //For Benchmarking
+    var summary = BenchmarkRunner.Run<BechmarkNew>();
+
+    //For Actual Insertion
+    /*Company tCompany = new Company();
     tCompany.Name = "Test Company";
     dbContext.Add(tCompany);
     dbContext.SaveChanges();
@@ -21,5 +27,28 @@ if (dbContext != null)
     dbContext.SaveChanges();
 
     Console.WriteLine($"New Company Code: {tCompany.Code}");
-    Console.WriteLine($"New User Code: {tUser.Code}");
+    Console.WriteLine($"New User Code: {tUser.Code}");*/
+}
+
+[MemoryDiagnoser]
+public class BechmarkNew
+{
+    [Benchmark()]
+    public void InsertWithCode()
+    {
+        var dbContext = new MyDBContext();
+        Company tCompany = new Company();
+        tCompany.Name = "Test Company";
+        dbContext.Add(tCompany);
+        dbContext.SaveChanges();
+    }
+    [Benchmark]
+    public void InsertWithOutCode()
+    {
+        var dbContext = new MyDBContext();
+        Company tCompany = new Company();
+        tCompany.Name = "Test Company";
+        dbContext.Add(tCompany);
+        dbContext.SaveChangeWithoutCodeGenerator();
+    }
 }
