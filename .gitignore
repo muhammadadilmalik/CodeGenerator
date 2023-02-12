@@ -5,3 +5,5 @@
 /CodeGenerator/obj
 /CodeGenerator/bin/Debug/net7.0
 /.vs
+/CodeGenerator/bin/Release/net7.0
+/CodeGenerator/BenchmarkDotNet.Artifacts
